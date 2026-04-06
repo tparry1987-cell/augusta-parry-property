@@ -167,7 +167,7 @@
 
     <!-- Hero -->
     <section id="hero" class="relative h-screen w-full overflow-hidden">
-      <img class="absolute inset-0 h-full w-full object-cover animate-ken-burns" alt="Luxury Mediterranean property in Cyprus" src="images/hero.jpeg" style="filter: brightness(0.80) saturate(1.1);"/>
+      <img class="absolute inset-0 h-full w-full object-cover animate-ken-burns" alt="Luxury Mediterranean property in Cyprus" src="images/hero-mediterranean.jpeg" style="filter: brightness(0.80) saturate(1.1);"/>
       <div class="absolute inset-0 bg-navy/20"></div>
       <div class="absolute inset-0 cinematic-vignette"></div>
       <div class="warm-overlay absolute inset-0"></div>
@@ -295,7 +295,7 @@
           <!-- Beachside Villas -->
           <div class="property-card group cursor-pointer bg-white overflow-hidden transition-all duration-700 hover:shadow-2xl fade-in-up reveal-delay-1" onclick="toggleDetail(this)">
             <div class="aspect-[4/5] overflow-hidden relative">
-              <img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Beachside Villas coastal living Polis Cyprus" src="https://www.pafilia.com/wp-content/uploads/2022/07/entrance-view_-scaled-1.jpg"/>
+              <img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Beachside Villas coastal living Polis Cyprus" src="images/beachside-villas.jpeg"/>
               <div class="absolute top-5 right-5 bg-white/90 backdrop-blur-md px-4 py-1.5 text-[9px] font-label uppercase tracking-widest">2&ndash;3 Bed &bull; From &euro;560,000</div>
             </div>
             <div class="p-7">
@@ -668,6 +668,52 @@
       <p class="text-tertiary/40 text-[9px] font-label tracking-[0.1em]">Website by <a href="https://voqalai.com" target="_blank" rel="noopener" class="hover:text-primary transition-colors">Voqal AI</a></p>
     </div>
   </footer>
+
+  <!-- Retell AI Voice Assistant Widget -->
+  <script
+    id="retell-widget"
+    type="module"
+    src="https://dashboard.retellai.com/retell-widget.js"
+    data-public-key="public_key_692e22f82e27e1f57afe6"
+    data-agent-id="agent_6f295d4606a1b9f90f44b94924"
+    data-title="Speak with Augusta's Assistant"
+    data-color="#c4956a"
+    data-bot-name="Property Assistant"
+    data-popup-message="Hello! I can help you explore luxury properties in Cyprus and Greece."
+    data-show-ai-popup="true"
+    data-show-ai-popup-time="20"
+  ></script>
+
+  <!-- Custom Chat Launcher Button -->
+  <button
+    id="augustaChatLauncher"
+    aria-label="Speak with Augusta's Property Assistant"
+    style="
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000000;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #d4aa83, #c4956a);
+      box-shadow: 0 4px 20px rgba(196,149,106,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    "
+  >
+    <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 4C10.6 4 3 10.4 3 18.2c0 4.5 2.4 8.5 6.2 11.2L7.5 36l7.2-3.6c1.7 0.4 3.4 0.6 5.3 0.6 9.4 0 17-6.4 17-14.2S29.4 4 20 4z" fill="white" opacity="0.95"/>
+      <rect x="12" y="16" width="3" height="8" rx="1.5" fill="#c4956a"><animate attributeName="height" values="8;3;8" dur="1.2s" begin="0s" repeatCount="indefinite"/><animate attributeName="y" values="16;18.5;16" dur="1.2s" begin="0s" repeatCount="indefinite"/></rect>
+      <rect x="17" y="13" width="3" height="14" rx="1.5" fill="#c4956a"><animate attributeName="height" values="14;5;14" dur="1.2s" begin="0.2s" repeatCount="indefinite"/><animate attributeName="y" values="13;17.5;13" dur="1.2s" begin="0.2s" repeatCount="indefinite"/></rect>
+      <rect x="22" y="15" width="3" height="10" rx="1.5" fill="#c4956a"><animate attributeName="height" values="10;3.5;10" dur="1.2s" begin="0.1s" repeatCount="indefinite"/><animate attributeName="y" values="15;18.25;15" dur="1.2s" begin="0.1s" repeatCount="indefinite"/></rect>
+      <rect x="27" y="17" width="3" height="6" rx="1.5" fill="#c4956a"><animate attributeName="height" values="6;2;6" dur="1.2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="y" values="17;19;17" dur="1.2s" begin="0.3s" repeatCount="indefinite"/></rect>
+    </svg>
+  </button>
 
   <script src="js/main.js"></script>
 </body>

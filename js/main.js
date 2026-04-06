@@ -217,7 +217,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== 9. Active Nav Link Highlighting =====
+  // ===== 9. Retell Widget Customisation =====
+  function retellCustomize() {
+    let host = null;
+    document.querySelectorAll('div').forEach(function(el) {
+      if (el.shadowRoot && el.style.position === 'fixed' && el.style.zIndex === '999999') {
+        host = el;
+      }
+    });
+    if (host && host.shadowRoot) {
+      var sr = host.shadowRoot;
+      var style = document.createElement('style');
+      style.textContent =
+        '.retell-chat-window { max-height: 400px !important; height: 400px !important; } ' +
+        '#retell-fab { display: none !important; } ' +
+        '.retell-popup-container { bottom: 70px !important; right: 0 !important; }';
+      sr.appendChild(style);
+      var inp = sr.querySelector('input[placeholder], textarea[placeholder]');
+      if (inp) inp.placeholder = 'Ask about properties...';
+      var fab = sr.querySelector('#retell-fab');
+      var btn = document.getElementById('augustaChatLauncher');
+      if (btn && fab) {
+        btn.addEventListener('click', function() { fab.click(); });
+        btn.addEventListener('mouseenter', function() {
+          btn.style.transform = 'scale(1.1)';
+          btn.style.boxShadow = '0 6px 28px rgba(196,149,106,0.5)';
+        });
+        btn.addEventListener('mouseleave', function() {
+          btn.style.transform = 'scale(1)';
+          btn.style.boxShadow = '0 4px 20px rgba(196,149,106,0.4)';
+        });
+      }
+    } else {
+      setTimeout(retellCustomize, 500);
+    }
+  }
+  setTimeout(retellCustomize, 1000);
+
+  // ===== 10. Active Nav Link Highlighting =====
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('nav a[href^="#"]');
 
