@@ -249,7 +249,7 @@ const Properties = (function () {
      * Creates the HTML string for a single property card.
      */
     function createCardHTML(property) {
-        const imageSrc = property.image || 'images/property-placeholder.jpg';
+        const imageSrc = property.image || 'images/hero.jpeg';
         const priceDisplay = property.price
             ? `<span class="property-card__price">${formatPrice(property.price)}</span>`
             : '';
@@ -281,7 +281,7 @@ const Properties = (function () {
                     <img src="${escapeAttr(imageSrc)}"
                          alt="${escapeAttr(property.title || 'Property')}"
                          loading="lazy"
-                         onerror="this.src='images/property-placeholder.jpg'">
+                         onerror="this.src='images/hero.jpeg'">
                 </div>
                 <div class="property-card__body">
                     <h3 class="property-card__title">${escapeHTML(property.title || 'Untitled Property')}</h3>
