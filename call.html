@@ -239,6 +239,31 @@
     }
     .footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(250,246,240,0.2); }
     .hide { display: none !important; }
+    .mic-notice {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 440px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: rgba(196,149,106,0.10);
+      border: 1px solid rgba(196,149,106,0.3);
+      color: rgba(250,246,240,0.85);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      line-height: 1.45;
+      text-align: left;
+    }
+    .mic-notice .material-symbols-rounded {
+      font-size: 20px;
+      color: var(--primary-light);
+      flex: 0 0 auto;
+    }
+    .mic-notice strong { font-weight: 500; color: var(--cream); }
+    body.connected .mic-notice,
+    body.connecting .mic-notice,
+    body.ended .mic-notice { display: none; }
     .timer {
       font-family: 'Inter', monospace;
       font-variant-numeric: tabular-nums;
@@ -288,6 +313,11 @@
         <span class="material-symbols-rounded">call_end</span>
         <span>End Call</span>
       </button>
+    </div>
+
+    <div id="micNotice" class="mic-notice">
+      <span class="material-symbols-rounded">mic</span>
+      <span>When you tap <strong>Start Call</strong>, your browser will ask to use your microphone &mdash; tap <strong>Allow</strong> to speak.</span>
     </div>
 
     <div id="preCallHint">
@@ -401,9 +431,21 @@
       startBtn.disabled = true;
       postNote.classList.add('hide');
       setMode('connecting');
-      setStatus('Connecting\u2026');
+      setStatus('Please allow microphone access\u2026');
 
       try {
+        // Prompt for mic first so we can give a clearer message if denied.
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach((t) => t.stop());
+        } catch (micErr) {
+          setMode('error');
+          setStatus('Microphone access blocked. Enable it in your browser and try again.');
+          startBtn.disabled = false;
+          return;
+        }
+
+        setStatus('Connecting\u2026');
         const accessToken = await fetchAccessToken();
         if (!client) {
           client = new RetellWebClient();
@@ -419,7 +461,7 @@
       } catch (err) {
         console.error(err);
         setMode('error');
-        setStatus('Could not start the call. Check mic access and try again.');
+        setStatus('Could not start the call. Please try again.');
         startBtn.disabled = false;
       }
     }
