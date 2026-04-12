@@ -1,4 +1,5 @@
 {
   "buildCommand": "bash scripts/check-images.sh",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "cleanUrls": true
 }
