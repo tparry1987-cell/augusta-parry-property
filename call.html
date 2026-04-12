@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Call Augusta's Property Assistant</title>
+  <meta name="description" content="Speak with Augusta Parry's AI property assistant. Ask about luxury villas and resort residences in Cyprus and Greece."/>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" href="images/augusta-parry.JPG"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Outfit:wght@200;300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --primary: #c4956a;
+      --primary-light: #d4aa83;
+      --primary-dark: #a07a52;
+      --navy: #1a2332;
+      --navy-soft: #2a3a52;
+      --cream: #faf6f0;
+      --outline: #d4cdc5;
+      --danger: #c94444;
+      --success: #5a8f5a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overscroll-behavior: none; }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      color: var(--cream);
+      background:
+        radial-gradient(1200px 800px at 80% -10%, rgba(196,149,106,0.18), transparent 60%),
+        radial-gradient(900px 700px at -10% 100%, rgba(74,124,155,0.18), transparent 60%),
+        linear-gradient(180deg, #0f1620 0%, #1a2332 45%, #0f1620 100%);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+    .grain::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.35'/></svg>");
+      opacity: 0.06;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: 0;
+    }
+    .wrap {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px 40px;
+      text-align: center;
+      gap: 28px;
+    }
+    .brandbar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      padding: 20px 24px 0;
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 0.3em;
+      font-size: 14px;
+      color: rgba(250,246,240,0.55);
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .avatar-ring {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .avatar {
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      background-image: url("images/augusta-parry.JPG");
+      background-size: cover;
+      background-position: center 20%;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        inset 0 0 0 3px rgba(250,246,240,0.15);
+    }
+    .pulse {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(196,149,106,0.55);
+      animation: pulse 2.4s ease-out infinite;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .pulse.p2 { animation-delay: 0.8s; }
+    .pulse.p3 { animation-delay: 1.6s; }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; border-color: rgba(196,149,106,0.55); }
+      100% { transform: scale(1.45); opacity: 0; }
+    }
+    body.connected .pulse { animation-duration: 1.8s; border-color: rgba(90,143,90,0.5); }
+    body.ended .pulse, body.idle .pulse { display: none; }
+    body.speaking .avatar { animation: breathe 1.4s ease-in-out infinite; }
+    @keyframes breathe {
+      0%,100% { box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 3px rgba(196,149,106,0.5), 0 0 0 0 rgba(196,149,106,0.25); }
+      50%     { box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 3px rgba(196,149,106,0.9), 0 0 0 14px rgba(196,149,106,0.12); }
+    }
+    .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(34px, 5vw, 46px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+    .role {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.6);
+      margin-top: 8px;
+    }
+    .status {
+      min-height: 22px;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.75);
+      font-weight: 300;
+    }
+    .status .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      background: var(--primary);
+    }
+    body.connected .status .dot { background: var(--success); animation: glow 1.6s ease-in-out infinite; }
+    body.error .status .dot { background: var(--danger); }
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(90,143,90,0.6); }
+      50% { box-shadow: 0 0 0 8px rgba(90,143,90,0); }
+    }
+    .primary-btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 36px;
+      border-radius: 999px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      box-shadow: 0 14px 40px rgba(196,149,106,0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+    }
+    .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 50px rgba(196,149,106,0.55), inset 0 1px 0 rgba(255,255,255,0.3); }
+    .primary-btn:active { transform: translateY(0); }
+    .primary-btn[disabled] { opacity: 0.6; cursor: wait; }
+    .primary-btn .material-symbols-rounded { font-size: 22px; font-variation-settings: 'FILL' 1; }
+    .end-btn {
+      background: linear-gradient(135deg, #d85555 0%, #a83a3a 100%);
+      box-shadow: 0 14px 40px rgba(201,68,68,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .end-btn:hover { box-shadow: 0 18px 50px rgba(201,68,68,0.5), inset 0 1px 0 rgba(255,255,255,0.25); }
+    .mute-btn {
+      appearance: none;
+      border: 1px solid rgba(250,246,240,0.2);
+      cursor: pointer;
+      padding: 12px;
+      border-radius: 50%;
+      background: rgba(250,246,240,0.05);
+      color: var(--cream);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      width: 52px; height: 52px;
+    }
+    .mute-btn:hover { background: rgba(250,246,240,0.1); border-color: rgba(250,246,240,0.35); }
+    .mute-btn.active { background: rgba(196,149,106,0.2); border-color: var(--primary); }
+    .mute-btn .material-symbols-rounded { font-size: 22px; }
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .hint {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.4);
+      font-weight: 300;
+      max-width: 420px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      max-width: 520px;
+    }
+    .chip {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      font-weight: 300;
+      padding: 8px 14px;
+      border: 1px solid rgba(250,246,240,0.15);
+      border-radius: 999px;
+      color: rgba(250,246,240,0.7);
+      background: rgba(250,246,240,0.03);
+    }
+    .footer {
+      padding: 16px;
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(250,246,240,0.35);
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+    .footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(250,246,240,0.2); }
+    .hide { display: none !important; }
+    .timer {
+      font-family: 'Inter', monospace;
+      font-variant-numeric: tabular-nums;
+      font-size: 14px;
+      letter-spacing: 0.18em;
+      color: rgba(250,246,240,0.7);
+      margin-top: 6px;
+      min-height: 20px;
+    }
+
+    @media (max-width: 420px) {
+      .avatar-ring { width: 150px; height: 150px; }
+      .avatar { width: 140px; height: 140px; }
+      .primary-btn { padding: 16px 28px; font-size: 14px; }
+      .name { font-size: 32px; }
+    }
+  </style>
+</head>
+<body class="grain idle">
+  <div class="brandbar">Augusta Parry &nbsp;&middot;&nbsp; Property Consultant</div>
+
+  <main class="wrap">
+    <div class="avatar-ring" aria-hidden="true">
+      <span class="pulse"></span>
+      <span class="pulse p2"></span>
+      <span class="pulse p3"></span>
+      <div class="avatar"></div>
+    </div>
+
+    <div>
+      <h1 class="name">Augusta's Assistant</h1>
+      <div class="role">Cyprus &amp; Greece Property</div>
+    </div>
+
+    <div id="status" class="status"><span class="dot"></span>Ready to call</div>
+    <div id="timer" class="timer"></div>
+
+    <div class="controls">
+      <button id="startBtn" class="primary-btn" type="button">
+        <span class="material-symbols-rounded">call</span>
+        <span>Start Call</span>
+      </button>
+      <button id="muteBtn" class="mute-btn hide" type="button" aria-label="Mute microphone" title="Mute microphone">
+        <span class="material-symbols-rounded" id="muteIcon">mic</span>
+      </button>
+      <button id="endBtn" class="primary-btn end-btn hide" type="button">
+        <span class="material-symbols-rounded">call_end</span>
+        <span>End Call</span>
+      </button>
+    </div>
+
+    <div id="preCallHint">
+      <div class="chips">
+        <span class="chip">Minthis Resort</span>
+        <span class="chip">Elysia Beachside</span>
+        <span class="chip">Off-plan investment</span>
+        <span class="chip">Viewings</span>
+      </div>
+      <p class="hint" style="margin-top:18px">Ask about properties, book a consultation, or tell her what you're looking for.</p>
+    </div>
+
+    <p id="postCallNote" class="hint hide" style="max-width:480px">Thanks for calling. For anything complex, Augusta will follow up personally.</p>
+  </main>
+
+  <footer class="footer">Powered by <a href="https://voqalai.com" target="_blank" rel="noopener">Voqal AI</a></footer>
+
+  <script type="module">
+    import { RetellWebClient } from 'https://esm.sh/retell-client-js-sdk@2.0.7';
+
+    const $ = (id) => document.getElementById(id);
+    const startBtn = $('startBtn');
+    const endBtn   = $('endBtn');
+    const muteBtn  = $('muteBtn');
+    const muteIcon = $('muteIcon');
+    const status   = $('status');
+    const timerEl  = $('timer');
+    const preHint  = $('preCallHint');
+    const postNote = $('postCallNote');
+    const body     = document.body;
+
+    const setStatus = (txt) => { status.innerHTML = '<span class="dot"></span>' + txt; };
+    const setMode = (mode) => {
+      body.classList.remove('idle', 'connecting', 'connected', 'speaking', 'ended', 'error');
+      body.classList.add(mode);
+    };
+
+    let client = null;
+    let callStartedAt = null;
+    let timerId = null;
+    let muted = false;
+
+    const fmt = (s) => {
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
+    };
+    const startTimer = () => {
+      callStartedAt = Date.now();
+      timerId = setInterval(() => {
+        timerEl.textContent = fmt(Math.floor((Date.now() - callStartedAt) / 1000));
+      }, 1000);
+    };
+    const stopTimer = () => {
+      if (timerId) { clearInterval(timerId); timerId = null; }
+    };
+
+    async function fetchAccessToken() {
+      const r = await fetch('/api/create-call', { method: 'POST' });
+      if (!r.ok) {
+        const t = await r.text().catch(() => '');
+        throw new Error(`Create call failed (${r.status}): ${t.slice(0,200)}`);
+      }
+      const data = await r.json();
+      if (!data.access_token) throw new Error('Missing access token');
+      return data.access_token;
+    }
+
+    function wireClient(c) {
+      c.on('call_started', () => {
+        setMode('connected');
+        setStatus('Connected');
+        startTimer();
+        startBtn.classList.add('hide');
+        endBtn.classList.remove('hide');
+        muteBtn.classList.remove('hide');
+        preHint.classList.add('hide');
+      });
+      c.on('agent_start_talking', () => {
+        body.classList.add('speaking');
+      });
+      c.on('agent_stop_talking', () => {
+        body.classList.remove('speaking');
+      });
+      c.on('call_ended', () => {
+        stopTimer();
+        setMode('ended');
+        setStatus('Call ended');
+        startBtn.classList.remove('hide');
+        endBtn.classList.add('hide');
+        muteBtn.classList.add('hide');
+        postNote.classList.remove('hide');
+        timerEl.textContent = '';
+        muted = false;
+        muteBtn.classList.remove('active');
+        muteIcon.textContent = 'mic';
+      });
+      c.on('error', (err) => {
+        console.error('Retell error', err);
+        stopTimer();
+        setMode('error');
+        setStatus('Something went wrong. Please try again.');
+        startBtn.classList.remove('hide');
+        startBtn.disabled = false;
+        endBtn.classList.add('hide');
+        muteBtn.classList.add('hide');
+      });
+    }
+
+    async function startCall() {
+      startBtn.disabled = true;
+      postNote.classList.add('hide');
+      setMode('connecting');
+      setStatus('Connecting\u2026');
+
+      try {
+        const accessToken = await fetchAccessToken();
+        if (!client) {
+          client = new RetellWebClient();
+          wireClient(client);
+        }
+        await client.startCall({
+          accessToken,
+          sampleRate: 24000,
+          captureDeviceId: 'default',
+          emitRawAudioSamples: false,
+        });
+        setStatus('Ringing\u2026');
+      } catch (err) {
+        console.error(err);
+        setMode('error');
+        setStatus('Could not start the call. Check mic access and try again.');
+        startBtn.disabled = false;
+      }
+    }
+
+    async function endCall() {
+      endBtn.disabled = true;
+      setStatus('Ending call\u2026');
+      try { await client?.stopCall(); } catch (_) {}
+      endBtn.disabled = false;
+    }
+
+    function toggleMute() {
+      if (!client) return;
+      muted = !muted;
+      try {
+        if (muted) {
+          client.mute?.();
+          muteBtn.classList.add('active');
+          muteIcon.textContent = 'mic_off';
+          muteBtn.setAttribute('aria-label', 'Unmute microphone');
+          muteBtn.title = 'Unmute microphone';
+        } else {
+          client.unmute?.();
+          muteBtn.classList.remove('active');
+          muteIcon.textContent = 'mic';
+          muteBtn.setAttribute('aria-label', 'Mute microphone');
+          muteBtn.title = 'Mute microphone';
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    startBtn.addEventListener('click', startCall);
+    endBtn.addEventListener('click', endCall);
+    muteBtn.addEventListener('click', toggleMute);
+  </script>
+</body>
+</html>
