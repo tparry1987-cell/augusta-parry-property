@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Call Guru Presat AI Coaching</title>
+  <meta name="description" content="Speak with Priya, the AI assistant for Guru Presat AI Coaching. Ask about webinars, one-to-one sessions, or book a free consultation. Tamil and English."/>
+  <meta name="robots" content="noindex"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --accent: #ff8a3c;
+      --accent-light: #ffb077;
+      --accent-dark: #d26a1f;
+      --ink: #0c1a2b;
+      --ink-soft: #1a2d44;
+      --mist: #f6f1ea;
+      --success: #4fa46a;
+      --danger: #d65050;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overscroll-behavior: none; }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      color: var(--mist);
+      background:
+        radial-gradient(1000px 700px at 85% -5%, rgba(255,138,60,0.22), transparent 60%),
+        radial-gradient(800px 600px at -10% 110%, rgba(94,140,220,0.18), transparent 60%),
+        linear-gradient(180deg, #07101c 0%, #0c1a2b 50%, #07101c 100%);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.35'/></svg>");
+      opacity: 0.06;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      z-index: 0;
+    }
+    .brandbar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      padding: 20px 24px 0;
+      font-family: 'Fraunces', serif;
+      letter-spacing: 0.22em;
+      font-size: 12px;
+      color: rgba(246,241,234,0.55);
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .brandbar .sep { opacity: 0.4; }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 24px 32px;
+      text-align: center;
+      gap: 24px;
+    }
+
+    .avatar-ring {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+    .avatar {
+      width: 158px;
+      height: 158px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--accent-light) 0%, var(--accent) 40%, var(--accent-dark) 100%);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        inset 0 0 0 3px rgba(246,241,234,0.15);
+      display: grid;
+      place-items: center;
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 64px;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .pulse {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(255,138,60,0.5);
+      animation: pulse 2.4s ease-out infinite;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .pulse.p2 { animation-delay: 0.8s; }
+    .pulse.p3 { animation-delay: 1.6s; }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; border-color: rgba(255,138,60,0.5); }
+      100% { transform: scale(1.45); opacity: 0; }
+    }
+    body.connected .pulse { animation-duration: 1.8s; border-color: rgba(79,164,106,0.45); }
+    body.ended .pulse, body.idle .pulse { display: none; }
+    body.speaking .avatar { animation: breathe 1.4s ease-in-out infinite; }
+    @keyframes breathe {
+      0%,100% { box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 3px rgba(255,138,60,0.4), 0 0 0 0 rgba(255,138,60,0.2); }
+      50%     { box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 0 0 3px rgba(255,138,60,0.85), 0 0 0 14px rgba(255,138,60,0.12); }
+    }
+
+    .name {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: clamp(30px, 4.8vw, 42px);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .name em { font-style: italic; color: var(--accent-light); }
+    .role {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(246,241,234,0.55);
+      margin-top: 8px;
+    }
+    .biling {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 14px;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: rgba(246,241,234,0.75);
+    }
+    .biling .tam { color: var(--accent-light); }
+
+    .status {
+      min-height: 22px;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(246,241,234,0.75);
+      font-weight: 300;
+    }
+    .status .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      background: var(--accent);
+    }
+    body.connected .status .dot { background: var(--success); animation: glow 1.6s ease-in-out infinite; }
+    body.error .status .dot { background: var(--danger); }
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(79,164,106,0.55); }
+      50% { box-shadow: 0 0 0 8px rgba(79,164,106,0); }
+    }
+    .timer {
+      font-family: 'Inter', monospace;
+      font-variant-numeric: tabular-nums;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: rgba(246,241,234,0.65);
+      min-height: 20px;
+    }
+
+    .primary-btn {
+      appearance: none; border: 0; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 18px 34px;
+      border-radius: 999px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      box-shadow: 0 14px 40px rgba(255,138,60,0.38), inset 0 1px 0 rgba(255,255,255,0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+    }
+    .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 50px rgba(255,138,60,0.5), inset 0 1px 0 rgba(255,255,255,0.32); }
+    .primary-btn:active { transform: translateY(0); }
+    .primary-btn[disabled] { opacity: 0.6; cursor: wait; }
+    .primary-btn .material-symbols-rounded { font-size: 22px; font-variation-settings: 'FILL' 1; }
+    .end-btn {
+      background: linear-gradient(135deg, #e06060 0%, #b03838 100%);
+      box-shadow: 0 14px 40px rgba(214,80,80,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .end-btn:hover { box-shadow: 0 18px 50px rgba(214,80,80,0.5), inset 0 1px 0 rgba(255,255,255,0.25); }
+
+    .mute-btn {
+      appearance: none; border: 1px solid rgba(246,241,234,0.2); cursor: pointer;
+      padding: 12px; border-radius: 50%;
+      background: rgba(246,241,234,0.05);
+      color: var(--mist);
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      width: 52px; height: 52px;
+    }
+    .mute-btn:hover { background: rgba(246,241,234,0.1); border-color: rgba(246,241,234,0.35); }
+    .mute-btn.active { background: rgba(255,138,60,0.2); border-color: var(--accent); }
+    .mute-btn .material-symbols-rounded { font-size: 22px; }
+
+    .controls { display: flex; align-items: center; justify-content: center; gap: 16px; }
+
+    .chips {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 560px;
+    }
+    .chip {
+      font-size: 12px; letter-spacing: 0.08em; font-weight: 400;
+      padding: 8px 14px;
+      border: 1px solid rgba(246,241,234,0.15);
+      border-radius: 999px;
+      color: rgba(246,241,234,0.72);
+      background: rgba(246,241,234,0.03);
+    }
+    .chip strong { font-weight: 500; color: var(--accent-light); }
+
+    .hint {
+      font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(246,241,234,0.42); font-weight: 300; max-width: 440px;
+    }
+
+    .mic-notice {
+      display: inline-flex; align-items: center; gap: 10px;
+      max-width: 440px; padding: 12px 18px;
+      border-radius: 14px;
+      background: rgba(255,138,60,0.10);
+      border: 1px solid rgba(255,138,60,0.3);
+      color: rgba(246,241,234,0.85);
+      font-size: 13px; font-weight: 300;
+      letter-spacing: 0.02em; line-height: 1.45; text-align: left;
+    }
+    .mic-notice .material-symbols-rounded {
+      font-size: 20px; color: var(--accent-light); flex: 0 0 auto;
+    }
+    .mic-notice strong { font-weight: 500; color: var(--mist); }
+    body.connected .mic-notice,
+    body.connecting .mic-notice,
+    body.ended .mic-notice { display: none; }
+
+    .footer {
+      padding: 16px; text-align: center;
+      font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: rgba(246,241,234,0.35); font-weight: 300;
+      position: relative; z-index: 1;
+    }
+    .footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(246,241,234,0.2); }
+
+    .hide { display: none !important; }
+
+    @media (max-width: 420px) {
+      .avatar-ring { width: 140px; height: 140px; }
+      .avatar { width: 130px; height: 130px; font-size: 52px; }
+      .primary-btn { padding: 16px 26px; font-size: 13px; }
+      .name { font-size: 28px; }
+    }
+  </style>
+</head>
+<body class="idle">
+  <div class="brandbar">
+    <span>Guru Presat</span>
+    <span class="sep">·</span>
+    <span>AI Coaching</span>
+  </div>
+
+  <main class="wrap">
+    <div class="avatar-ring" aria-hidden="true">
+      <span class="pulse"></span>
+      <span class="pulse p2"></span>
+      <span class="pulse p3"></span>
+      <div class="avatar">P</div>
+    </div>
+
+    <div>
+      <h1 class="name">Speak with <em>Priya</em></h1>
+      <div class="role">AI Coaching Assistant</div>
+      <div class="biling"><span class="tam">தமிழ்</span>&nbsp;·&nbsp;<span>English</span>&nbsp;·&nbsp;<span>Tanglish</span></div>
+    </div>
+
+    <div id="status" class="status"><span class="dot"></span>Ready to call</div>
+    <div id="timer" class="timer"></div>
+
+    <div class="controls">
+      <button id="startBtn" class="primary-btn" type="button">
+        <span class="material-symbols-rounded">call</span>
+        <span>Start Call</span>
+      </button>
+      <button id="muteBtn" class="mute-btn hide" type="button" aria-label="Mute microphone" title="Mute microphone">
+        <span class="material-symbols-rounded" id="muteIcon">mic</span>
+      </button>
+      <button id="endBtn" class="primary-btn end-btn hide" type="button">
+        <span class="material-symbols-rounded">call_end</span>
+        <span>End Call</span>
+      </button>
+    </div>
+
+    <div id="micNotice" class="mic-notice">
+      <span class="material-symbols-rounded">mic</span>
+      <span>When you tap <strong>Start Call</strong>, your browser will ask to use your microphone &mdash; tap <strong>Allow</strong> to speak.</span>
+    </div>
+
+    <div id="preCallHint">
+      <div class="chips">
+        <span class="chip">Live <strong>AI webinars</strong></span>
+        <span class="chip"><strong>One-to-one</strong> coaching</span>
+        <span class="chip">Free 15-min <strong>consultation</strong></span>
+        <span class="chip">வணக்கம்&nbsp;·&nbsp;hi&nbsp;·&nbsp;hello</span>
+      </div>
+      <p class="hint" style="margin-top:14px">Speak Tamil, English, or mix both &mdash; Priya follows your lead.</p>
+    </div>
+
+    <p id="postCallNote" class="hint hide" style="max-width:480px">Thanks for calling &mdash; நன்றி! Guru will be in touch with anything you asked for.</p>
+  </main>
+
+  <footer class="footer">Powered by <a href="https://voqalai.com" target="_blank" rel="noopener">Voqal AI</a></footer>
+
+  <script type="module">
+    import { RetellWebClient } from 'https://esm.sh/retell-client-js-sdk@2.0.7';
+
+    const $ = (id) => document.getElementById(id);
+    const startBtn = $('startBtn');
+    const endBtn   = $('endBtn');
+    const muteBtn  = $('muteBtn');
+    const muteIcon = $('muteIcon');
+    const status   = $('status');
+    const timerEl  = $('timer');
+    const preHint  = $('preCallHint');
+    const postNote = $('postCallNote');
+    const body     = document.body;
+
+    const setStatus = (txt) => { status.innerHTML = '<span class="dot"></span>' + txt; };
+    const setMode = (mode) => {
+      body.classList.remove('idle', 'connecting', 'connected', 'speaking', 'ended', 'error');
+      body.classList.add(mode);
+    };
+
+    let client = null;
+    let callStartedAt = null;
+    let timerId = null;
+    let muted = false;
+
+    const fmt = (s) => {
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r;
+    };
+    const startTimer = () => {
+      callStartedAt = Date.now();
+      timerId = setInterval(() => {
+        timerEl.textContent = fmt(Math.floor((Date.now() - callStartedAt) / 1000));
+      }, 1000);
+    };
+    const stopTimer = () => {
+      if (timerId) { clearInterval(timerId); timerId = null; }
+    };
+
+    async function fetchAccessToken() {
+      const r = await fetch('/api/create-guru-call', { method: 'POST' });
+      if (!r.ok) {
+        const t = await r.text().catch(() => '');
+        throw new Error('Create call failed (' + r.status + '): ' + t.slice(0,200));
+      }
+      const data = await r.json();
+      if (!data.access_token) throw new Error('Missing access token');
+      return data.access_token;
+    }
+
+    function wireClient(c) {
+      c.on('call_started', () => {
+        setMode('connected');
+        setStatus('Connected');
+        startTimer();
+        startBtn.classList.add('hide');
+        endBtn.classList.remove('hide');
+        muteBtn.classList.remove('hide');
+        preHint.classList.add('hide');
+      });
+      c.on('agent_start_talking', () => body.classList.add('speaking'));
+      c.on('agent_stop_talking',  () => body.classList.remove('speaking'));
+      c.on('call_ended', () => {
+        stopTimer();
+        setMode('ended');
+        setStatus('Call ended');
+        startBtn.classList.remove('hide');
+        endBtn.classList.add('hide');
+        muteBtn.classList.add('hide');
+        postNote.classList.remove('hide');
+        timerEl.textContent = '';
+        muted = false;
+        muteBtn.classList.remove('active');
+        muteIcon.textContent = 'mic';
+      });
+      c.on('error', (err) => {
+        console.error('Retell error', err);
+        stopTimer();
+        setMode('error');
+        setStatus('Something went wrong. Please try again.');
+        startBtn.classList.remove('hide');
+        startBtn.disabled = false;
+        endBtn.classList.add('hide');
+        muteBtn.classList.add('hide');
+      });
+    }
+
+    async function startCall() {
+      startBtn.disabled = true;
+      postNote.classList.add('hide');
+      setMode('connecting');
+      setStatus('Please allow microphone access\u2026');
+
+      try {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach((t) => t.stop());
+        } catch (micErr) {
+          setMode('error');
+          setStatus('Microphone access blocked. Enable it in your browser and try again.');
+          startBtn.disabled = false;
+          return;
+        }
+
+        setStatus('Connecting\u2026');
+        const accessToken = await fetchAccessToken();
+        if (!client) {
+          client = new RetellWebClient();
+          wireClient(client);
+        }
+        await client.startCall({
+          accessToken,
+          sampleRate: 24000,
+          captureDeviceId: 'default',
+          emitRawAudioSamples: false,
+        });
+        setStatus('Ringing\u2026');
+      } catch (err) {
+        console.error(err);
+        setMode('error');
+        setStatus('Could not start the call. Please try again.');
+        startBtn.disabled = false;
+      }
+    }
+
+    async function endCall() {
+      endBtn.disabled = true;
+      setStatus('Ending call\u2026');
+      try { await client?.stopCall(); } catch (_) {}
+      endBtn.disabled = false;
+    }
+
+    function toggleMute() {
+      if (!client) return;
+      muted = !muted;
+      try {
+        if (muted) {
+          client.mute?.();
+          muteBtn.classList.add('active');
+          muteIcon.textContent = 'mic_off';
+          muteBtn.setAttribute('aria-label', 'Unmute microphone');
+          muteBtn.title = 'Unmute microphone';
+        } else {
+          client.unmute?.();
+          muteBtn.classList.remove('active');
+          muteIcon.textContent = 'mic';
+          muteBtn.setAttribute('aria-label', 'Mute microphone');
+          muteBtn.title = 'Mute microphone';
+        }
+      } catch (e) { console.error(e); }
+    }
+
+    startBtn.addEventListener('click', startCall);
+    endBtn.addEventListener('click', endCall);
+    muteBtn.addEventListener('click', toggleMute);
+  </script>
+</body>
+</html>
