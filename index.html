@@ -690,8 +690,7 @@
           </div>
 
           <div class="fade-in-up reveal-delay-2">
-            <form name="property-enquiry" method="POST" data-netlify="true" class="space-y-5" id="contact-form">
-              <input type="hidden" name="form-name" value="property-enquiry"/>
+            <form name="property-enquiry" method="POST" action="/api/contact" class="space-y-5" id="contact-form" novalidate>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label class="text-white/30 text-[10px] font-label uppercase tracking-[0.2em] mb-2 block">Full Name</label>

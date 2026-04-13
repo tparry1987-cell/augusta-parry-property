@@ -101,48 +101,70 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== 6. Contact Form =====
   const form = document.getElementById('contact-form');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.querySelectorAll('input, textarea, select').forEach(f => {
+      f.addEventListener('input', () => { f.style.borderColor = ''; });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
       const name = form.querySelector('[name="name"]');
       const email = form.querySelector('[name="email"]');
       let valid = true;
-
       if (name && !name.value.trim()) { valid = false; name.style.borderColor = '#e74c3c'; }
-      if (email) {
-        if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-          valid = false; email.style.borderColor = '#e74c3c';
-        }
+      if (email && (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))) {
+        valid = false; email.style.borderColor = '#e74c3c';
       }
-
-      if (!valid) { e.preventDefault(); return; }
+      if (!valid) return;
 
       const btn = document.getElementById('submit-btn');
+      const originalHTML = btn?.innerHTML;
       if (btn) {
-        btn.dataset.original = btn.innerHTML;
+        btn.dataset.original = originalHTML;
         btn.innerHTML = 'Sending...';
         btn.disabled = true;
       }
 
-      // If not on Netlify, simulate success
-      if (!window.location.hostname.includes('netlify')) {
-        e.preventDefault();
+      const payload = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const ok = res.ok;
+        const body = await res.json().catch(() => ({}));
+        if (!ok) throw new Error(body.error || `HTTP ${res.status}`);
+
+        if (btn) {
+          btn.innerHTML = 'Enquiry Sent <span class="material-symbols-outlined text-sm">check</span>';
+          btn.style.background = '#7a8b6f';
+          btn.style.borderColor = '#7a8b6f';
+        }
+        form.reset();
         setTimeout(() => {
           if (btn) {
-            btn.innerHTML = 'Enquiry Sent! <span class="material-symbols-outlined text-sm">check</span>';
-            btn.style.background = '#7a8b6f';
-            setTimeout(() => {
-              btn.innerHTML = btn.dataset.original;
-              btn.style.background = '';
-              btn.disabled = false;
-              form.reset();
-            }, 3000);
+            btn.innerHTML = originalHTML;
+            btn.style.background = '';
+            btn.style.borderColor = '';
+            btn.disabled = false;
           }
-        }, 1200);
+        }, 4000);
+      } catch (err) {
+        console.error('Contact form submit failed', err);
+        if (btn) {
+          btn.innerHTML = 'Try again — ' + (err.message || 'send failed');
+          btn.style.background = '#e74c3c';
+          btn.style.borderColor = '#e74c3c';
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.style.background = '';
+            btn.style.borderColor = '';
+            btn.disabled = false;
+          }, 4000);
+        }
       }
-
-      // Clear error styling on input
-      form.querySelectorAll('input, textarea, select').forEach(f => {
-        f.addEventListener('input', () => { f.style.borderColor = ''; });
-      });
     });
   }
 
