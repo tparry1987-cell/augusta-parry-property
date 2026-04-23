@@ -469,6 +469,7 @@
         setMode('ended');
         setStatus('Call ended');
         startBtn.classList.remove('hide');
+        startBtn.disabled = false;
         endBtn.classList.add('hide');
         muteBtn.classList.add('hide');
         postNote.classList.remove('hide');
@@ -476,6 +477,7 @@
         muted = false;
         muteBtn.classList.remove('active');
         muteIcon.textContent = 'mic';
+        client = null;
       });
       c.on('error', (err) => {
         console.error('Retell error', err);
